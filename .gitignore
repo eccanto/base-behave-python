@@ -1,0 +1,13 @@
+# Python
+*.pyc
+__pycache__
+.mypy_cache/
+
+# Selenium
+geckodriver.log
+
+# tox files
+.tox
+
+# project files
+reports/
