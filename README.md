@@ -109,7 +109,7 @@ edit **`behave.ini`**:
 ...
 
 [behave.userdata]
-browser=firefox  # <- CHANGE HERE - Available options: firefox | chrome
+browser = firefox  # <- CHANGE HERE - Available options: firefox | chrome
 
 ...
 ```
