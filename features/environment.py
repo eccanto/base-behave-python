@@ -1,3 +1,5 @@
+"""Defines the code to run before and after certain events during testing."""
+
 import hashlib
 import os
 import shutil
@@ -7,33 +9,29 @@ from datetime import datetime
 from behave.model import Scenario
 from behave.model_core import Status
 from behave.runner import Context
-from pyvirtualdisplay import Display
 
-from features.steps.src.browser.driver import BrowserType
+from features.steps.src.browser.web_driver import BrowserType
 
 
 _DATE_FORMAT = '%H.%M.%S_%m.%d.%Y'
 
 
 def before_all(context: Context) -> None:
+    """Runs before all tests."""
     browser_kind = context.config.userdata.get('browser')
 
     context.screenshots_dir = context.config.userdata.get('screenshots', 'screenshots')
     if os.path.isdir(context.screenshots_dir):
         shutil.rmtree(context.screenshots_dir)
 
-    context.headless_mode = context.config.userdata.get('headless').lower() == 'true'
-
-    context.browser_params = dict(
-        kind=next((kind for kind in BrowserType if kind.value == browser_kind), browser_kind),
-    )
-
-    if context.headless_mode:
-        context.display = Display(visible=0, size=(800, 600))
-        context.display.start()
+    context.browser_params = {
+        'kind': next((kind for kind in BrowserType if kind.value == browser_kind), browser_kind),
+        'headless': context.config.userdata.get('headless').lower() == 'true',
+    }
 
 
 def after_scenario(context: Context, scenario: Scenario) -> None:
+    """Runs after each test."""
     if scenario.status == Status.failed:
         hash_gen = hashlib.sha256()
         hash_gen.update(f'{scenario.feature.filename}_{scenario.line}'.encode())
@@ -52,8 +50,3 @@ def after_scenario(context: Context, scenario: Scenario) -> None:
         context.browser.driver.save_screenshot(screenshot_file)
 
     context.browser.driver.close()
-
-
-def after_all(context: Context) -> None:
-    if context.headless_mode:
-        context.display.stop()

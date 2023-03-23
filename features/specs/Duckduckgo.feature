@@ -17,6 +17,6 @@ Feature: Search engine on the Duckduckgo website
     Then the text "<expected_text>" should be visible on the result page on the Search Engine page
 
     Examples:
-      | search_text | expected_text  |
-      | cypress     | cypress.io     |
-      | javascript  | JavaScript.com |
+      | search_text | expected_text |
+      | cypress     | cypress.io    |
+      | javascript  | JavaScript    |

@@ -10,4 +10,4 @@ geckodriver.log
 .tox
 
 # project files
-reports/
+output/

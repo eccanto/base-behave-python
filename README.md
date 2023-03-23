@@ -31,14 +31,7 @@ Basic example of using Python with Behave (BDD). This `Gherkin` example includes
 ## Installation
 
 ```bash
-pip3 install -r requirements.txt
-```
-
-on Ubuntu 20.04 (**`pyvirtualdisplay`** requirements, we use **`pyvirtualdisplay`** to avoid
-Cloudflare errors in headless mode):
-
-```bash
-sudo apt-get install xvfb xserver-xephyr tigervnc-standalone-server xfonts-base
+python3 -m pip install -r requirements.txt
 ```
 
 # How to run the tests
@@ -46,7 +39,7 @@ sudo apt-get install xvfb xserver-xephyr tigervnc-standalone-server xfonts-base
 ## Running tests
 
 ```bash
-behave
+python3 -m behave
 ```
 
 ```bash
@@ -56,33 +49,9 @@ behave
 Took 0m50.056s
 ```
 
-- **`./reports/ folder`**:
+**HTML report**:
 
-  ![Output](./docs/images/general_output.png "VSCode Side Bar")
-
-
-## Running tests and generate Allure report
-
-```bash
-behave -f allure -o reports/allure_report/
-```
-
-- **`./reports/ folder`**:
-
-  ![Output](./docs/images/allure_reports.png "VSCode Side Bar")
-
-
-### Open Allure report
-
-**`Note`**: [allure](https://docs.qameta.io/allure/) is required.
-
-```bash
-allure serve reports/allure_report/
-```
-
-HTML report:
-
-![Output](./docs/images/allure_html_report.png "Browser")
+![Output](./docs/images/report_html.png "Report")
 
 
 ## Running tagged tests
@@ -90,13 +59,13 @@ HTML report:
 ### Running tagged smoke tests
 
 ```bash
-behave --tags=smoke
+python3 -m behave --tags=smoke
 ```
 
 ### Running using customized tags
 
 ```bash
-behave --tags='<EXPRESSION>'
+python3 -m behave --tags='<EXPRESSION>'
 ```
 
 *more details*: [running-tagged-tests](https://jenisys.github.io/behave.example/tutorials/tutorial11.html)

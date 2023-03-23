@@ -1,40 +1,48 @@
+"""Module in charge of interacting with the Search Engine page."""
+
 from abc import ABCMeta
-from typing import Any, Dict, List, Tuple
+from typing import Tuple
 
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.ui import WebDriverWait
 
-from features.steps.src.browser.driver import BrowserDriverFactory
+from features.steps.src.browser.web_driver import BrowserDriverFactory, BrowserType
 
 
 ElementSelector = Tuple[str, str]
 
 
 class BaseSearchEngine(metaclass=ABCMeta):
+    """Class in charge of interacting with the Search Engine page."""
+
     URL: str
 
     _INPUT_SEARCH: ElementSelector
     _BTN_SEARCH: ElementSelector
     _RESULT_SEARCH: ElementSelector
 
-    def __init__(self, *args: List[Any], **kwargs: Dict[str, Any]) -> None:
-        self.driver = BrowserDriverFactory.create_driver(*args, **kwargs)
+    def __init__(self, kind: BrowserType, headless: bool) -> None:
+        """Constructor method."""
+        self.driver = BrowserDriverFactory.create_driver(kind=kind, headless=headless)
 
     def load(self) -> None:
+        """Loads the main page."""
         self.driver.get(self.URL)
 
     def find_element(self, selector: ElementSelector, timeout: float = 10.0) -> WebElement:
-        return WebDriverWait(self.driver, timeout).until(
-            expected_conditions.visibility_of_element_located(selector)
-        )
+        """Finds an element."""
+        return WebDriverWait(self.driver, timeout).until(expected_conditions.visibility_of_element_located(selector))
 
     def fill_search(self, text: str) -> None:
+        """Enters text for the search."""
         input_web = self.find_element(self._INPUT_SEARCH)
         input_web.send_keys(text)
 
     def search(self) -> None:
+        """Runs the search."""
         self.find_element(self._BTN_SEARCH).click()
 
     def result_text(self) -> str:
+        """Gets the text of the search result."""
         return self.find_element(self._RESULT_SEARCH).text
