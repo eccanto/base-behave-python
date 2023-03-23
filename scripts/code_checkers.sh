@@ -16,8 +16,8 @@ echo -e "${BOLDGREEN}> running isort...${ENDCOLOR}"
 python -m isort --check-only --diff "${PROJECT_DIR}"
 
 echo -e "${BOLDGREEN}> running prospector...${ENDCOLOR}"
-python -m prospector "${PROJECT_DIR}"
+python -m prospector "${PROJECT_DIR}" --no-autodetect
 
 # Shell static code checkers
 echo -e "${BOLDGREEN}> running shellcheck...${ENDCOLOR}"
-find "${PROJECT_DIR}" -name "*.sh" -type f -not -path '*/\.venv/*' -exec shellcheck {} \;
+find "${PROJECT_DIR}" -name "*.sh" -type f -not -path '*/\.venv/*' -not -path '*/\.tox/*' -exec shellcheck {} \;

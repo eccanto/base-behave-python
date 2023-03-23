@@ -21,10 +21,11 @@ Basic example of using Python with Behave (BDD). This `Gherkin` example includes
   * [Change Browser](#change-browser)
   * [Change Headless mode](#change-headless-mode)
 * [Static code analysis tools](#static-code-analysis-tools)
-  * [Find Problems](#find-problems)
-* [Testing](#testing)
+  * [Set up the Git hooks custom directory](#set-up-the-git-hooks-custom-directory)
+  * [Python Static Checkers](#python-static-checkers)
+  * [Shell Static Checkers](#shell-static-checkers)
+  * [Run manually](#run-manually)
 * [License](#license)
-* [Changelog](#changelog)
 
 # Get started
 
@@ -98,66 +99,60 @@ headless = true  # <- CHANGE HERE - Available options: true | false
 
 # Static code analysis tools
 
-## Find Problems
+These are the linters that will help us to follow good practices and style guides of our source code. We will be using
+the following static analysis tools, which will be executed when generating a new push in the repository (git hooks).
 
-Checkers statically analyzes the code to find problems.
+## Set up the Git hooks custom directory
+
+After cloning the repository run the following command in the repository root:
 
 ```bash
-bash code_checkers.sh  # run pylint, prospector, black and isort
+git config core.hooksPath .githooks
 ```
+
+## Python Static Checkers
 
 Tools used:
-- [pylint](https://github.com/PyCQA/pylint): Pylint is a Python static code analysis tool which looks for programming errors, helps enforcing a coding standard, sniffs for code smells and offers simple refactoring suggestions.
-- [black](https://github.com/psf/black): Black is the uncompromising Python code formatter.
-- [isort](https://pycqa.github.io/isort/): Python utility / library to sort imports alphabetically, and automatically separated into sections and by type.
-- [prospector](https://github.com/PyCQA/prospector): Prospector is a tool to analyse Python code and output information about errors, potential problems, convention violations and complexity.
+- [brunette](https://github.com/odwyersoftware/brunette): A best practice Python code formatter.
+- [isort](https://pycqa.github.io/isort/): Python utility / library to sort imports alphabetically, and automatically
+  separated into sections and by type.
+- [prospector](https://github.com/PyCQA/prospector): Prospector is a tool to analyse Python code and output information
+  about errors, potential problems, convention violations and complexity.
 
   Tools executed by Prospector:
+  - [pylint](https://github.com/PyCQA/pylint): Pylint is a Python static code analysis tool which looks for programming
+    errors, helps enforcing a coding standard, sniffs for code smells and offers simple refactoring suggestions.
   - [bandit](https://github.com/PyCQA/bandit): Bandit is a tool designed to find common security issues.
-  - [dodgy](https://github.com/landscapeio/dodgy): It is a series of simple regular expressions designed to detect things such as accidental SCM diff checkins, or passwords or secret keys hard coded into files.
+  - [dodgy](https://github.com/landscapeio/dodgy): It is a series of simple regular expressions designed to detect
+    things such as accidental SCM diff checkins, or passwords or secret keys hard coded into files.
   - [mccabe](https://github.com/PyCQA/mccabe): Complexity checker.
   - [mypy](https://github.com/python/mypy): Mypy is an optional static type checker for Python.
-  - [pep257](https://github.com/PyCQA/pydocstyle): pep257 is a static analysis tool for checking compliance with Python PEP 257.
-  - [pep8](https://pep8.readthedocs.io/en/release-1.7.x/): pep8 is a tool to check your Python code against some of the style conventions in PEP 8.
+  - [pydocstyle](https://github.com/PyCQA/pydocstyle): pydocstyle is a static analysis tool for checking compliance
+    with Python [PEP 257](https://peps.python.org/pep-0257/).
+  - [pycodestyle](https://pycodestyle.pycqa.org/en/latest/): pycodestyle is a tool to check your Python code against
+    some of the style conventions in [PEP 8](https://peps.python.org/pep-0008/).
   - [pyflakes](https://github.com/PyCQA/pyflakes): Pyflakes analyzes programs and detects various errors.
-  - [pyroma](https://github.com/regebro/pyroma): Pyroma is a product aimed at giving a rating of how well a Python project complies with the best practices of the Python packaging ecosystem, primarily PyPI, pip, Distribute etc, as well as a list of issues that could be improved.
+  - [pyroma](https://github.com/regebro/pyroma): Pyroma is a product aimed at giving a rating of how well a Python
+    project complies with the best practices of the Python packaging ecosystem, primarily PyPI, pip, Distribute etc,
+    as well as a list of issues that could be improved.
 
-# Testing
+## Shell Static Checkers
 
-We use **`tox`** to validate changes on linux OS (headless mode):
+Tools used:
+- [shellcheck](https://www.shellcheck.net/): Finds bugs in your shell scripts (bash).
 
-```bash
-tox
-```
+  Installation:
 
-**`output`**:
+  ```bash
+  apt install shellcheck
+  ```
 
-```bash
-...
-
-2 features passed, 0 failed, 0 skipped
-6 scenarios passed, 0 failed, 0 skipped
-30 steps passed, 0 failed, 0 skipped, 0 undefined
-Took 0m43.177s
-_____________________________________________ summary _____________________________________________
-  code_checkers: commands succeeded
-  py36: commands succeeded
-  py37: commands succeeded
-  py38: commands succeeded
-  py39: commands succeeded
-  congratulations :)
-```
-
-to validate changes for a particular Python version (**`36`**, **`37`**, **`38`** or **`39`**), you can do:
+## Run manually
 
 ```bash
-tox -e py36
+bash scripts/code_checkers.sh
 ```
 
 # License
 
 [MIT](./LICENSE)
-
-# Changelog
-
-- 1.0.0 - Initial release.

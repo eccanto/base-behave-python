@@ -2,6 +2,7 @@ strictness: veryhigh
 test-warnings: true
 doc-warnings: false
 member-warnings: true
+autodetect: false
 inherits:
   - default
 ignore-paths:
