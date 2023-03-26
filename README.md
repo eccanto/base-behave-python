@@ -43,11 +43,38 @@ python3 -m pip install -r requirements.txt
 python3 -m behave
 ```
 
-```bash
-2 features passed, 0 failed, 0 skipped
-6 scenarios passed, 0 failed, 0 skipped
-30 steps passed, 0 failed, 0 skipped, 0 undefined
-Took 0m50.056s
+```gherkin
+@duckduckgo
+Feature: Search engine on the Duckduckgo website # features/specs/Duckduckgo.feature:2
+
+  Background:   # features/specs/Duckduckgo.feature:4
+
+  @smoke
+  Scenario: Using the search input with the text "smoke test"                                             # features/specs/Duckduckgo.feature:9
+    Given I go to the Duckduckgo page                                                                     # features/steps/search_engine_steps.py:10 3.849s
+    And I see "DuckDuckGo" in the title                                                                   # features/steps/common_steps.py:8 0.007s
+    Given I fill the search input with the "smoke test" term on the Search Engine page                    # features/steps/search_engine_steps.py:17 0.037s
+    When I click on the search button on the Search Engine page                                           # features/steps/search_engine_steps.py:23 4.134s
+    Then the text "What is Smoke Testing?" should be visible on the result page on the Search Engine page # features/steps/search_engine_steps.py:29 0.298s
+
+  Scenario Outline: Using the search input with the text "cypress" -- @1.1                    # features/specs/Duckduckgo.feature:21
+    Given I go to the Duckduckgo page                                                         # features/steps/search_engine_steps.py:10 3.985s
+    And I see "DuckDuckGo" in the title                                                       # features/steps/common_steps.py:8 0.002s
+    Given I fill the search input with the "cypress" term on the Search Engine page           # features/steps/search_engine_steps.py:17 0.036s
+    When I click on the search button on the Search Engine page                               # features/steps/search_engine_steps.py:23 4.648s
+    Then the text "cypress.io" should be visible on the result page on the Search Engine page # features/steps/search_engine_steps.py:29 0.229s
+
+  Scenario Outline: Using the search input with the text "javascript" -- @1.2                 # features/specs/Duckduckgo.feature:22
+    Given I go to the Duckduckgo page                                                         # features/steps/search_engine_steps.py:10 3.067s
+    And I see "DuckDuckGo" in the title                                                       # features/steps/common_steps.py:8 0.005s
+    Given I fill the search input with the "javascript" term on the Search Engine page        # features/steps/search_engine_steps.py:17 0.038s
+    When I click on the search button on the Search Engine page                               # features/steps/search_engine_steps.py:23 4.498s
+    Then the text "JavaScript" should be visible on the result page on the Search Engine page # features/steps/search_engine_steps.py:29 0.158s
+
+1 feature passed, 0 failed, 0 skipped
+3 scenarios passed, 0 failed, 0 skipped
+15 steps passed, 0 failed, 0 skipped, 0 undefined
+Took 0m24.990s
 ```
 
 **HTML report**:
