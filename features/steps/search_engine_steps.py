@@ -4,21 +4,13 @@ from assertpy import assert_that
 from behave import step
 from behave.runner import Context
 
-from features.steps.src.pages.duckduckgo import DuckDuckGoPage
-from features.steps.src.pages.ecosia import EcosiaPage
-
-
-@step('I go to the Ecosia page')
-def step_impl(context: Context) -> None:
-    """Loads the main Ecosia page."""
-    context.browser = EcosiaPage(**context.browser_params)
-    context.browser.load()
+from features.steps.src.pages.duckduckgo import DuckduckgoPage
 
 
 @step('I go to the Duckduckgo page')
 def step_impl(context: Context) -> None:
     """Loads the main Duckduckgo page."""
-    context.browser = DuckDuckGoPage(**context.browser_params)
+    context.browser = DuckduckgoPage(**context.browser_params)
     context.browser.load()
 
 
